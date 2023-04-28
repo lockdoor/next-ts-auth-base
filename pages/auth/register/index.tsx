@@ -20,18 +20,20 @@ export default function Register() {
   const [email, setEmail] = useState<string>("");
   const [password, setPassword] = useState<string>("");
   const [errorMessage, setErrorMessage] = useState<string>("");
-
+  const [loading, setLoading] = useState(false)
   // hook
   const router = useRouter()
   const registerMutation = useMutation(register, {
     onSuccess: (response) => {
       if (response?.error) {
+        setLoading(false)
         setErrorMessage(response.error);
       } else {
         setName("");
         setEmail("");
         setPassword("");
         setErrorMessage("");
+        setLoading(false)
         console.log("success");
         router.push('/auth/register/waitVerify')
       }
@@ -41,6 +43,7 @@ export default function Register() {
   // function
   const submitHandle = (e: React.ChangeEvent<HTMLFormElement>) => {
     e.preventDefault();
+    setLoading(true)
     registerMutation.mutate({ name, email, password });
   };
 
@@ -61,7 +64,7 @@ export default function Register() {
             setValue={setPassword}
           />
           <div className="mt-5">
-            <SubmitBtn />
+            <SubmitBtn disabled={loading}/>
           </div>
         </form>
 

@@ -22,6 +22,7 @@ export default function SignIn({callbackUrl}: props) {
   const [errorMessage, setErrorMessage] = useState("");
   const [email, setEmail] = useState("pinamnil@hotmail.com");
   const [password, setPassword] = useState("12345678");
+  const [loading, setLoading] = useState(false)
 
   // hook
   const router = useRouter();
@@ -29,6 +30,7 @@ export default function SignIn({callbackUrl}: props) {
   // function
   const submitHandle = async (e: React.ChangeEvent<HTMLFormElement>) => {
     e.preventDefault();
+    setLoading(true)
     const response = await signIn("credentials", {
       email,
       password,
@@ -36,7 +38,9 @@ export default function SignIn({callbackUrl}: props) {
     });
     if (response?.error) {
       setErrorMessage(response.error);
+      setLoading(false)
     } else {
+      setLoading(false)
       router.push(callbackUrl === '/' ? '/dashboard': callbackUrl)
     }
   };
@@ -59,7 +63,7 @@ export default function SignIn({callbackUrl}: props) {
             setValue={setPassword}
           />
           <div className="mt-5">
-            <SubmitBtn />
+            <SubmitBtn disabled={loading}/>
           </div>
         </form>
 
