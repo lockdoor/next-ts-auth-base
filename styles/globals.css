@@ -1,0 +1,21 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+/* html, body {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+ul {
+  padding: 0;
+} */
+
+.error-message-global-1 {
+  @apply text-center text-red-500 text-xl capitalize underline underline-offset-8
+}
+
+.form-global-1 {
+  @apply w-[400px] mx-auto my-8 border border-red-300  p-5 rounded-md shadow-md
+}
